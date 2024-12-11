@@ -31,4 +31,4 @@ app.use((err: Error, request: Request, response: Response, next: NextFunction) =
 })
 
 const port = 3000
-app.listen(port, () => console.log("Servidor rodando na porta:", port ))
+app.listen(process.env.PORT ? Number(process.env.PORT) : port, () => console.log("Servidor rodando na porta:", port ))
