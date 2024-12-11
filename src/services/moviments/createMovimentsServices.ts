@@ -10,11 +10,28 @@ type ICreateMovimentRequest = {
 export class CreateMovimentServices {
 
     async service(request: ICreateMovimentRequest){
-        const dataFormatted = {...request}
+        const amountRequest = Number(request.amount)
+        console.log("Amount", amountRequest)
+        const dataFormatted = {...request, amount: Number(request.amount)}
+        console.log("DAtas", request)
+    
 
-        await prisma.moviment.create({
-            data: {...dataFormatted}
-        })
+        const data = await prisma.product.findFirst({where: {id: request.idProduct}})
+        let dataAmount = 0
+        const amountProduct = Number(data?.amount)
+
+        console.log("amountProduct", amountProduct, "amountRequest", amountRequest)
+
+        if(request.type == "Entrada" && amountProduct) {
+            dataAmount+= Number(amountProduct + amountRequest)
+        } else if (request.type == "Saída" && amountProduct) {
+            dataAmount+= Number(amountProduct - amountRequest)
+
+        }  
+        console.log("DataAmount", dataAmount)
+
+        await prisma.moviment.create({data: dataFormatted})
+        await prisma.product.update({where: {id: request.idProduct}, data: {...data, amount: dataAmount}})
 
     }
 }

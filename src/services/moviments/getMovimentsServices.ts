@@ -2,13 +2,13 @@ import admin from "firebase-admin";
 import { prisma } from "../../api/prisma";
 
 type IMovimentsRequest = {
-    uid: string;
+    id: string;
 }
 
 export class GetMovimentsServices {
 
-    async services({uid}: IMovimentsRequest) {
-      const moviments = await prisma.moviment.findMany()
+    async services({id}: IMovimentsRequest) {
+      const moviments = await prisma.moviment.findMany({where: {idProduct: id}})
 
 
       return moviments

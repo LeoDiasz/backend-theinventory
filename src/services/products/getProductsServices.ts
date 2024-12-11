@@ -6,10 +6,6 @@ export class GetProductsServices {
   async services() {
     const products = await prisma.product.findMany()
 
-
-    
-
-
     return products
   }
 }

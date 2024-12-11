@@ -4,7 +4,7 @@ import { CreateMovimentController } from "../controller/moviments/createMoviment
 
 export const movimentsRoutes = Router();
 
-movimentsRoutes.get("/moviments", new getMovimentsController().execute);
+movimentsRoutes.post("/moviments/search", new getMovimentsController().execute);
 movimentsRoutes.post("/moviments", new CreateMovimentController().execute);
 
 
