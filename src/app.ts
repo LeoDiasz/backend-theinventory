@@ -19,7 +19,7 @@ app.use(productsRoutes);
 app.use(movimentsRoutes);
 
 
-app.use((err: Error, _request: Request, response: Response) => {
+app.use((err: Error, _request: Request, response: Response, next: NextFunction) => {
   if(err instanceof AppError) {
     return response.status(err.status).json({error: err.message});
   }
