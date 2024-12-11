@@ -4,7 +4,6 @@ import "express-async-errors";
 import "dotenv/config";
 
 import {AppError} from "./errors/appError"
-import cors from "cors"
 import { userRoutes } from "./routes/userRoutes";
 import { productsRoutes } from "./routes/productsRoutes";
 import { movimentsRoutes } from "./routes/movimentsRoutes";
@@ -16,7 +15,6 @@ admin.initializeApp({
 });
 
 app.use(express.json());
-app.use(cors());
 
 app.use(userRoutes);
 app.use(productsRoutes);
