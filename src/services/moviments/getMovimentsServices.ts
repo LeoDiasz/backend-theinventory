@@ -1,4 +1,5 @@
 import admin from "firebase-admin";
+import { prisma } from "../../api/prisma";
 
 type IMovimentsRequest = {
     uid: string;
@@ -7,17 +8,9 @@ type IMovimentsRequest = {
 export class GetMovimentsServices {
 
     async services({uid}: IMovimentsRequest) {
-        const data = await admin
-          .firestore()
-          .collection("moviments")
-          .where("idProduct", "==", uid)
-          .get()
-          .then((snapshot) => {
-            const moviments = snapshot.docs.map((doc) => ({ ...doc.data(), uid: doc.id}));
-    
-            return moviments
-          });
-    
-        return data
-      }
+      const moviments = await prisma.moviment.findMany()
+
+
+      return moviments
+    }
 }

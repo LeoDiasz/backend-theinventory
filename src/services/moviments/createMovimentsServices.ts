@@ -1,25 +1,20 @@
 import admin from "firebase-admin"
+import { prisma } from "../../api/prisma";
 
 type ICreateMovimentRequest = {
     amount: number;
     idProduct: string;
     type: string;
-    date?: Date;
 }
 
 export class CreateMovimentServices {
 
     async service(request: ICreateMovimentRequest){
+        const dataFormatted = {...request}
 
-        const dataFormatted = {...request, date: new Date()}
-
-        const id = await admin.firestore()
-        .collection("moviments")
-        .add(dataFormatted)
-        .then(snapshot => {
-            return snapshot.id
+        await prisma.moviment.create({
+            data: {...dataFormatted}
         })
 
-        return id
     }
 }

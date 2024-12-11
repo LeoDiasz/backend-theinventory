@@ -1,30 +1,27 @@
-import admin from "firebase-admin"
+import admin from "firebase-admin";
 import { movimentDTO } from "../../dto/moviments";
-
+import { prisma } from "../../api/prisma";
 
 type ICreateProductRequest = {
-    uid?: string;
-    name: string;
-    codBar: string;
-    type: string;
-    amount: number;
-    amountMin: number;
-    amountMax: number;
-    date?: Date;
-    moviments?: movimentDTO[]
-}
+  name: string;
+  codBar: string;
+  type: string;
+  amount: number;
+  amountMin: number;
+  amountMax: number;
+};
 
 export class CreateProductServices {
+  async service(request: ICreateProductRequest) {
+    const dataFormatted = {
+      ...request,
+      amount: Number(request.amount),
+      amountMin: Number(request.amountMin),
+      amountMax: Number(request.amountMax)
+    };
 
-    async service(request: ICreateProductRequest){
-
-        const dataFormatted = {...request, date: new Date()}
-
-        const id = await admin.firestore()
-        .collection("products")
-        .add(dataFormatted)
-        .then(snapshot => ({uid: snapshot.id}))
-
-        return id
-    }
+    await prisma.product.create({
+      data: { ...dataFormatted },
+    });
+  }
 }
