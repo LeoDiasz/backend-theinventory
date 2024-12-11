@@ -1,18 +1,23 @@
+import admin from "firebase-admin";
 
-
-type IGetMovimentsRequest = {
-
+type IMovimentsRequest = {
+    uid: string;
 }
-
-
-type IGetMovimentsResponse = {
-
-}
-
 
 export class GetMovimentsServices {
 
-    async service(request: IGetMovimentsRequest) {
-                
-    }
+    async services({uid}: IMovimentsRequest) {
+        const data = await admin
+          .firestore()
+          .collection("moviments")
+          .where("idProduct", "==", uid)
+          .get()
+          .then((snapshot) => {
+            const moviments = snapshot.docs.map((doc) => ({ ...doc.data(), uid: doc.id}));
+    
+            return moviments
+          });
+    
+        return data
+      }
 }

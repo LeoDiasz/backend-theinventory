@@ -1,14 +1,8 @@
 import { ProductDTO } from "../../dto/products";
 import admin from "firebase-admin";
 
-type IGetProductsRequest = {};
-
-type IGetProductsResponse = {
-  data: ProductDTO[];
-};
-
 export class GetProductsServices {
-  async services(request: IGetProductsRequest) {
+  async services() {
     const data = await admin
       .firestore()
       .collection("products")

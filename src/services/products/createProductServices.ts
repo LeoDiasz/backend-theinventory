@@ -1,5 +1,4 @@
 import admin from "firebase-admin"
-import { ProductDTO } from "../../dto/products";
 import { movimentDTO } from "../../dto/moviments";
 
 

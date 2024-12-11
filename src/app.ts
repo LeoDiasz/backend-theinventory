@@ -4,7 +4,6 @@ import "express-async-errors";
 import "dotenv/config";
 
 import {AppError} from "./errors/appError"
-import { userRoutes } from "./routes/userRoutes";
 import { productsRoutes } from "./routes/productsRoutes";
 import { movimentsRoutes } from "./routes/movimentsRoutes";
 
@@ -16,12 +15,11 @@ admin.initializeApp({
 
 app.use(express.json());
 
-app.use(userRoutes);
 app.use(productsRoutes);
 app.use(movimentsRoutes);
 
 
-app.use((err: Error, request: Request, response: Response, next: NextFunction) => {
+app.use((err: Error, _request: Request, response: Response) => {
   if(err instanceof AppError) {
     return response.status(err.status).json({error: err.message});
   }
