@@ -3,8 +3,6 @@ import admin from "firebase-admin";
 import "express-async-errors";
 import "dotenv/config";
 
-import http from "http";
-
 import {AppError} from "./errors/appError"
 import cors from "cors"
 import { userRoutes } from "./routes/userRoutes";
